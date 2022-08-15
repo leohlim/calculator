@@ -9,21 +9,41 @@ class Calculator {
     }
 
     clear() {
-        this.currentOperand = '';
+        this.currentOperand = '0';
         this.previousOperand = '';
         this.operation = undefined;
     }
 
-    delete() {
+    mod() {
+        this.currentOperand = this.currentOperand / 100;
+    }
 
+    negative() {
+        this.currentOperand *= (-1);
+        if (this.operation != undefined) {
+            this.previousOperand *= (-1);
+        }
     }
 
     appendNumber(number) {
         if (number === '.' && this.currentOperand.includes('.')) return;
-        this.currentOperand = this.currentOperand.toString() + number.toString();
+        if (number === '0' && this.currentOperand.includes('0')) return;
+        if (this.currentOperand === '0' && number != '.') {
+            this.currentOperand = number.toString();
+    
+        }else {        
+            this.currentOperand = this.currentOperand.toString() + number.toString();
+        }
+
     }
 
     chooseOperation(operation) {
+        if(this.currentOperand === '') return;
+        if(this.previousOperand !== '') {
+            this.compute();
+        }
+
+
         this.operation = operation;
         this.previousOperand = this.currentOperand;
         this.currentOperand = '';
@@ -31,11 +51,42 @@ class Calculator {
     }
 
     compute() {
-
+        let computation;
+        const prev = parseFloat(this.previousOperand);
+        const current = parseFloat(this.currentOperand);
+        if (isNaN(prev) || isNaN(current)) return 
+        switch (this.operation) {
+            case '+': 
+                computation = prev + current;
+                break;
+            case '-':
+                computation = prev - current;
+                break;
+            case 'x':
+                computation = prev * current;
+                break;
+            case '÷':
+                if (current === 0) {
+                    alert("Good job. You broke it. ")
+                }
+                computation = prev / current;
+                break;
+            default:
+                return;
+        }
+        this.currentOperand = computation;
+        this.operation = undefined;
+        this.previousOperand = '';
     }
 
     updateDisplay() {
         this.currentOperandTextElement.innerText = this.currentOperand;
+        if(this.operation != null) {
+            this.previousOperandTextElement.innerText = 
+            `${this.previousOperand} ${this.operation}`
+        } else {
+            previousOperandTextElement.innerText = '';
+        }
     }
 }
 
@@ -44,6 +95,8 @@ const operationButtons = document.querySelectorAll('[data-operation]')
 const formatButtons = document.querySelectorAll('[data-format]')
 const equalsButton = document.querySelector('[data-equals]')
 const allClearButton = document.querySelector('[data-all-clear]')
+const modButton = document.querySelector('[data-mod]')
+const negativeButton = document.querySelector('[data-negative]')
 const previousOperandTextElement = document.querySelector('[data-previous-operand]')
 const currentOperandTextElement = document.querySelector('[data-current-operand]')
 
@@ -63,23 +116,22 @@ operationButtons.forEach(button => {
     })
 })
 
+equalsButton.addEventListener('click', button => {
+    calculator.compute();
+    calculator.updateDisplay();
+})
 
-// Operate function that takes two numbers and an operator, and returns the result
-    
-function operate(a, b, operator) {
-    // If operator equals the given operator 
-    // Return that operation passing in a and b 
+allClearButton.addEventListener('click', button => {
+    calculator.clear();
+    calculator.updateDisplay();
+})
 
-    if (operator === '+') {
-        return a + b;
-    } else if (operator === '-') {
-        return a - b;
-    } else if (operator === '*') {
-        return a * b;
-    } else if (operator === '/') {
-        return a / b;
-    }
-}
+modButton.addEventListener('click', button => {
+    calculator.mod();
+    calculator.updateDisplay();
+})
 
-    
-    
+negativeButton.addEventListener('click', button => {
+    calculator.negative();
+    calculator.updateDisplay();
+})

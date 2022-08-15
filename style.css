@@ -59,6 +59,24 @@ body {
     word-wrap: break-word;
     word-break: break-all;
     color: white;
-    font-size: 7.5rem;
     font-style: normal;
+}
+
+.output .previous-operand {
+    font-size: 2.5rem;
+
+}
+
+.output .current-operand {
+    font-size: 4.5rem;
+
+}
+
+button.operator {
+    background: #f1a33c;
+}
+
+button.function {
+    color: black;
+  background: #a5a5a5;
 }
