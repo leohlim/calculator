@@ -2,30 +2,33 @@
 // A calculator script that can add, subtract, multiply and divide and show its operations/results on a screen
 
 
-// Basic calculator functions
+const numberButtons = document.querySelectorAll('[data-number]')
+const operationButtons = document.querySelectorAll('[data-operation]')
+const formatButtons = document.querySelectorAll('[data-format]')
+const equalsButton = document.querySelector('[data-equals]')
+const allClearButton = document.querySelector('[data-all-clear]')
+const previousOperandTextElement = document.querySelector('[data-previous-operand]')
+const currentOperandTextElement = document.querySelector('[data-current-operand]')
 
-function add(a, b) {
-    return a + b;
-    }
-    
-function subtract(a, b) {
-    return a - b;
-    }
-    
-function multiply(a, b) {
-    return a * b;
-    }
-    
-function divide(a, b) { 
-    return a / b;
-    }
+
+
 
 
 // Operate function that takes two numbers and an operator, and returns the result
     
-function operate (a, b, operator) {
+function operate(a, b, operator) {
     // If operator equals the given operator 
     // Return that operation passing in a and b 
+
+    if (operator === '+') {
+        return a + b;
+    } else if (operator === '-') {
+        return a - b;
+    } else if (operator === '*') {
+        return a * b;
+    } else if (operator === '/') {
+        return a / b;
+    }
 }
 
     
