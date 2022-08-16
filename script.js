@@ -20,9 +20,6 @@ class Calculator {
 
     negative() {
         this.currentOperand *= (-1);
-        if (this.operation != undefined) {
-            this.previousOperand *= (-1);
-        }
     }
 
     appendNumber(number) {
